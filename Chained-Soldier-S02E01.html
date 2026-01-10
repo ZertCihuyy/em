@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Mato Seihei no Slave E01S02</title>
+
+<!-- ArtPlayer CSS -->
+<link rel="stylesheet" href="https://unpkg.com/artplayer/dist/artplayer.css">
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0a0f1f, #02040a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* PLAYER CONTAINER */
+#player {
+    width: 100%;
+    max-width: 1280px;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+}
+
+/* FONT SUBTITLE ANIME */
+@font-face {
+    font-family: "AnimeSub";
+    src: url("https://fonts.gstatic.com/s/notosansjp/v52/-F6ofjtqLzI2JPCgQBnw7HFQogg.ttf");
+}
+</style>
+</head>
+<body>
+
+<div id="player"></div>
+
+<script src="https://unpkg.com/artplayer/dist/artplayer.js"></script>
+
+<script>
+const VIDEO_URL = 'https://dl.dropboxusercontent.com/scl/fi/ygnngqg610m2rhk0uk92i/Chained-Soldier-S02E01.mp4?rlkey=ov0c19k46yiivskj5p5kaaxr1';
+const SUB_URL   = 'https://raw.githubusercontent.com/ZertCihuyy/em/main/vtt/ID_Mato_Seihei_No_Slave_E01S02.vtt';
+
+const art = new Artplayer({
+    container: '#player',
+    url: VIDEO_URL,
+    type: 'mp4',
+
+    autoplay: false,
+    volume: 0.8,
+
+    autoSize: true,
+    aspectRatio: true,
+
+    fullscreen: true,
+    setting: true,
+    playbackRate: true,
+
+    subtitles: {
+        type: 'vtt',
+        encoding: 'utf-8',
+        escape: false,
+        style: {
+            fontFamily: 'AnimeSub',
+            fontSize: '26px',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            lineHeight: '1.4',
+            textShadow: `
+                -2px -2px 0 #000,
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                 0px  0px 6px #000
+            `,
+            background: 'transparent',
+            bottom: '6%',
+        },
+    },
+
+    /* WATERMARK (AMATIR TIDAK BISA COPOT) */
+    layers: [
+        {
+            html: `
+                <span style="color:#00e5ff">CIHUY</span>
+                <span style="color:#ffffff">NIME</span>
+            `,
+            style: {
+                position: 'absolute',
+                top: '14px',
+                left: '18px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                opacity: '0.85',
+                pointerEvents: 'none',
+                textShadow: '0 0 6px rgba(0,0,0,0.8)',
+            },
+        },
+    ],
+});
+
+/* FORCE SUBTITLE LOAD */
+art.on('ready', () => {
+    art.subtitle.switch(SUB_URL, 'vtt');
+    art.subtitle.show = true;
+});
+
+/* TOGGLE SUBTITLE */
+art.controls.add({
+    name: 'subtitle-toggle',
+    position: 'right',
+    html: 'SUB',
+    tooltip: 'Subtitle ON / OFF',
+    click: () => {
+        art.subtitle.show = !art.subtitle.show;
+    },
+});
+</script>
+
+</body>
+</html>
