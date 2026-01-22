@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chained Soldier S02E01</title>
+
+    <!-- ArtPlayer CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/artplayer/dist/artplayer.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+        }
+
+        /* PLAYER FULL VIEW */
+        #player {
+            width: 100%;
+            height: 100vh;
+            background: #000;
+        }
+
+        /* FONT SUBTITLE ANIME */
+        @font-face {
+            font-family: "AnimeSub";
+            src: url("https://fonts.gstatic.com/s/notosansjp/v52/-F6ofjtqLzI2JPCgQBnw7HFQogg.ttf");
+        }
+    </style>
+</head>
+<body>
+
+<div id="player"></div>
+
+<!-- ArtPlayer JS -->
+<script src="https://unpkg.com/artplayer/dist/artplayer.js"></script>
+
+<script>
+const VIDEO_URL = 'https://www.dropbox.com/scl/fi/mouwtcysrzn6thd9ahxfd/Chained_Soldier_Season_S02E03.mkv?rlkey=x6mbi1c107z3rnm6zut77fjh7&st=hsnutuk6&raw=1
+';
+const SUB_URL   = 'https://raw.githubusercontent.com/ZertCihuyy/em/main/vtt/ID_Mato_Seihei_No_Slave_E01S02.vtt';
+
+const art = new Artplayer({
+    container: '#player',
+    url: VIDEO_URL,
+    type: 'mp4',
+
+    autoplay: false,
+    volume: 0.8,
+
+    autoSize: true,
+    aspectRatio: true,
+    fullscreen: true,
+    setting: true,
+    playbackRate: true,
+
+    /* SUBTITLE STYLE ONLY */
+    subtitles: {
+        type: 'vtt',
+        encoding: 'utf-8',
+        escape: false,
+        style: {
+            fontFamily: 'AnimeSub',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            lineHeight: '1.4',
+            textShadow: `
+                -2px -2px 0 #000,
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                 0 0 6px #000
+            `,
+            background: 'rgba(0,0,0,0.4)',
+        },
+    },
+
+    /* WATERMARK */
+    layers: [
+        {
+            html: '<span style="color:#00e5ff">CIHUY</span> <span style="color:#fff">NIME</span>',
+            style: {
+                position: 'absolute',
+                top: '12px',
+                left: '16px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                opacity: '0.8',
+                pointerEvents: 'none',
+            },
+        },
+    ],
+});
+
+/* ===== FORCE LOAD SUBTITLE ===== */
+art.on('ready', () => {
+    art.subtitle.switch(SUB_URL, 'vtt'); // LOAD FILE
+    art.subtitle.show = true;            // SHOW
+});
+</script>
+
+
+</body>
+</html>
